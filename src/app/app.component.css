@@ -13,7 +13,7 @@ ul {
   border-radius: 5px;
 }
 ul li {
-  border-bottom: 1px solid;
+  border-bottom: 1px solid #ccc;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -24,4 +24,7 @@ ul li {
 }
 li button {
   margin-right: 0.5em;
+}
+h3 {
+  margin: 0.5em;
 }

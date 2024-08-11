@@ -1,18 +1,20 @@
 <div class="container">
+  <h3>ToDo List</h3>
   <form [formGroup]="taskForm" (ngSubmit)="add()">
     <mat-form-field appearance="outline">
       <mat-label>Task</mat-label>
       <input matInput formControlName="description">
+      <mat-error *ngIf="!taskForm.get('description')?.valid && taskForm.get('description')?.touched">The task field is
+        required!</mat-error>
     </mat-form-field>
-    <button mat-flat-button color="primary" type="submit">Add</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="!taskForm.valid">Add</button>
   </form>
   <ul>
     <li *ngFor="let task of tasks">
-      <mat-checkbox></mat-checkbox>
-      {{task.description}}
+      <mat-checkbox (change)="complete(task)" [checked]="task.isCompleted"></mat-checkbox>
+      <span [ngStyle]="{'text-decoration': task.isCompleted ? 'line-through' : 'none'}">{{task.description}}</span>
       <div class="space"></div>
-      <button mat-flat-button color="primary">Edit</button>
-      <button mat-flat-button color="warn">Delete</button>
+      <button mat-flat-button color="warn" (click)="delete(task.id)">Delete</button>
     </li>
   </ul>
 </div>

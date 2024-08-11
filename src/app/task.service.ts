@@ -7,15 +7,23 @@ import { taskCreationDto, taskDto } from './task.models';
   providedIn: 'root',
 })
 export class TaskService {
-  apiUrl = 'https://localhost:7220';
+  apiUrl = 'https://localhost:7220/api/tasks';
   constructor(private http: HttpClient) {}
 
   get(): Observable<any> {
-    return this.http.get<taskDto[]>(this.apiUrl + '/api/tasks');
+    return this.http.get<taskDto[]>(this.apiUrl);
   }
 
   create(taskCreationDto: taskCreationDto) {
     console.log(taskCreationDto.description);
-    return this.http.post(`${this.apiUrl}/api/tasks`, taskCreationDto);
+    return this.http.post(`${this.apiUrl}`, taskCreationDto);
+  }
+
+  delete(id: number) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+  update(id: number, task: taskCreationDto) {
+    return this.http.put(`${this.apiUrl}/${id}`, task);
   }
 }
