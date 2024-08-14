@@ -28,3 +28,6 @@ li button {
 h3 {
   margin: 0.5em;
 }
+.example-spacer {
+  flex: 1 1 auto;
+}

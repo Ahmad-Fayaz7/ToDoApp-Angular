@@ -10,6 +10,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -27,7 +28,10 @@ import { MatInputModule } from '@angular/material/input';
 export class SignupComponent {
   signupForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.signupForm = this.formBuilder.group({
@@ -37,6 +41,8 @@ export class SignupComponent {
   }
 
   signup() {
-    console.log('something');
+    const email = this.signupForm.get('email')?.value;
+    const password = this.signupForm.get('password')?.value;
+    this.authService.signup({ email, password });
   }
 }

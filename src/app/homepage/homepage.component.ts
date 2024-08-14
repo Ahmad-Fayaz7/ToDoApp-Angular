@@ -15,7 +15,8 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterOutlet } from '@angular/router';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 @Component({
   selector: 'app-homepage',
   standalone: true,
@@ -29,6 +30,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     MatCheckboxModule,
     ReactiveFormsModule,
     SweetAlert2Module,
+    MatIconModule,
+    MatToolbarModule,
   ],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css',
