@@ -17,6 +17,8 @@ import { RouterOutlet } from '@angular/router';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { AuthService } from '../auth.service';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-homepage',
   standalone: true,
@@ -32,6 +34,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     SweetAlert2Module,
     MatIconModule,
     MatToolbarModule,
+    MatPaginatorModule,
   ],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css',
@@ -40,12 +43,16 @@ export class HomepageComponent {
   constructor(
     private taskService: TaskService,
     private formBuilder: FormBuilder,
-    private sweetAlert: SweetAlertService
+    private sweetAlert: SweetAlertService,
+    private authService: AuthService
   ) {}
   title = 'todo-app-angular';
   tasks: taskDto[] = [];
   task: taskCreationDto = { description: 'abcd', isCompleted: false };
   taskForm!: FormGroup;
+  totalAmountOfRecords!: string;
+  currentPage = 1;
+  pageSize = 5;
   ngOnInit() {
     this.taskForm = this.formBuilder.group({
       description: ['', Validators.required],
@@ -54,9 +61,12 @@ export class HomepageComponent {
   }
 
   loadTasks() {
-    this.taskService.get().subscribe((response) => {
-      this.tasks = response;
-    });
+    this.taskService
+      .get(this.currentPage, this.pageSize)
+      .subscribe((response) => {
+        this.tasks = response.taskDto;
+        this.totalAmountOfRecords = response.totalRecords;
+      });
   }
 
   // Add task
@@ -100,5 +110,17 @@ export class HomepageComponent {
     this.taskService.update(task.id, taskCreationDto).subscribe(() => {
       this.loadTasks();
     });
+  }
+
+  // Update page
+  updatePage(event: PageEvent) {
+    this.currentPage = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.loadTasks();
+  }
+
+  // Log out
+  logout() {
+    this.authService.logout();
   }
 }

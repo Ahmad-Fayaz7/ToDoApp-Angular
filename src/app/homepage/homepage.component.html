@@ -5,8 +5,8 @@
     <span>ToDo</span>
     <span class="example-spacer"></span>
 
-
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    logout
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="logout()">
         <mat-icon>logout</mat-icon>
     </button>
 </mat-toolbar>
@@ -33,4 +33,9 @@
             <button mat-flat-button color="warn" (click)="delete(task.id)">Delete</button>
         </li>
     </ul>
+
+    <mat-paginator [length]="totalAmountOfRecords" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]"
+        class="mat-elevation-z8" aria-label="Select page" (page)="updatePage($event)">
+    </mat-paginator>
+
 </div>

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { taskCreationDto, taskDto } from './task.models';
@@ -10,8 +10,11 @@ export class TaskService {
   apiUrl = 'https://localhost:7220/api/tasks';
   constructor(private http: HttpClient) {}
 
-  get(): Observable<any> {
-    return this.http.get<taskDto[]>(this.apiUrl);
+  get(pageIndex: number, pageSize: number): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('pageIndex', pageIndex.toString());
+    params = params.append('pageSize', pageSize.toString());
+    return this.http.get<any>(this.apiUrl, { params });
   }
 
   create(taskCreationDto: taskCreationDto) {
